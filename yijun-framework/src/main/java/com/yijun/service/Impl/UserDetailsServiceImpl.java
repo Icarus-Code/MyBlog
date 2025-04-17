@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-/**
- * @author 35238
- * @date 2023/7/22 0022 21:59
- */
+
 //当yijun-blog的BlogLoginServiceImpl类封装好登录的用户名和密码之后，就会传到当前这个实现类
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
