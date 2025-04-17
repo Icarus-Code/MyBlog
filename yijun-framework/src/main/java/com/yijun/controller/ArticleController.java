@@ -8,10 +8,8 @@ import com.yijun.service.ArticleService;
 import com.yijun.vo.ArticleListVo;
 import com.yijun.vo.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -69,4 +67,14 @@ public class ArticleController {
         return responseResult;
     }
 
+    //------------------------------------查询文章详情------------------------------------
+
+    @GetMapping("/{id}") //路径参数形式的HTTP请求，注意下面那行只有加@PathVariable注解才能接收路径参数形式的HTTP请求
+    //ResponseResult是yijun-framework工程的domain目录的类
+    public ResponseResult getArticleDetail(@PathVariable("id") Long id) {//注解里指定的id跟上一行保持一致
+
+        //根据id查询文章详情
+        return articleService.getArticleDetail(id);
+
+    }
 }

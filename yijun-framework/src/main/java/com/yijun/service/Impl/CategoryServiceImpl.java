@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 
     @Autowired
-    //ArticleService是我们在huanf-framework写的接口
+    //ArticleService是我们在yijun-framework写的接口
     private ArticleService articleService;
 
     @Override

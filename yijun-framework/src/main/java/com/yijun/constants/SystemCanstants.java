@@ -28,4 +28,9 @@ public class SystemCanstants {
      */
     public static final String STATUS_NORMAL = "0";
 
+    /**
+     * 友链状态为审核通过
+     */
+    public static final String LINK_STATUS_NORMAL = "0";
+
 }
