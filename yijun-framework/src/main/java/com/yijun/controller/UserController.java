@@ -25,4 +25,10 @@ public class UserController {
         //更新个人信息
         return userService.updateUserInfo(user);
     }
+
+    @PostMapping("/register")
+    public ResponseResult register(@RequestBody User user) {
+        //注册功能
+        return userService.register(user);
+    }
 }
