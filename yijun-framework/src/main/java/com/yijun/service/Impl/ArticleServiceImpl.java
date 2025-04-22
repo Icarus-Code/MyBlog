@@ -11,6 +11,7 @@ import com.yijun.mapper.ArticleMapper;
 import com.yijun.service.ArticleService;
 import com.yijun.service.CategoryService;
 import com.yijun.utils.BeanCopyUtils;
+import com.yijun.utils.RedisCache;
 import com.yijun.vo.ArticleDetailVo;
 import com.yijun.vo.ArticleListVo;
 import com.yijun.vo.HotArticleVO;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -29,11 +31,32 @@ import java.util.stream.Collectors;
 //ServiceImpl是mybatisPlus官方提供的
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
+    @Autowired
+    //操作数据库。ArticleService是我们在huanf-framework工程写的接口
+    private ArticleService articleService;
+
+
     @Override
     public ResponseResult hotArticleList() {
 
+        //-------------------每调用这个方法就从redis查询文章的浏览量，展示在热门文章列表------------------------
+
+        //获取redis中的浏览量，注意得到的viewCountMap是HashMap双列集合
+        Map<String, Integer> viewCountMap = redisCache.getCacheMap("article:viewCount");
+        //让双列集合调用entrySet方法即可转为单列集合，然后才能调用stream方法
+        List<Article> xxarticles = viewCountMap.entrySet()
+                .stream()
+                .map(entry -> new Article(Long.valueOf(entry.getKey()), entry.getValue().longValue()))
+                //把最终数据转为List集合
+                .collect(Collectors.toList());
+        //把获取到的浏览量更新到mysql数据库中。updateBatchById是mybatisplus提供的批量操作数据的接口
+        articleService.updateBatchById(xxarticles);
+
+        //-----------------------------------------------------------------------------------------
+
         //查询热门文章，封装成ResponseResult返回。把所有查询条件写在queryWrapper里面
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+
         //查询的不能是草稿。也就是Status字段不能是0
         queryWrapper.eq(Article::getStatus, SystemCanstants.ARTICLE_STATUS_NORMAL);
         //按照浏览量进行排序。也就是根据ViewCount字段降序排序
@@ -104,6 +127,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
          */
         //用categoryId来查询categoryName(category表的name字段)，也就是查询'分类名称'
         List<Article> articles = page.getRecords();
+
         articles.stream()
                 .map(new Function<Article, Article>() {
                     @Override
@@ -129,13 +153,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return ResponseResult.okResult(pageVo);
     }
 
-    //---------------------------------根据id查询文章详情---------------------------------
+    //---------------------------------根据id查询文章详情----------------------------------
 
     @Override
     public ResponseResult getArticleDetail(Long id) {
 
         //根据id查询文章
         Article article = getById(id);
+
+        //-------------------从redis查询文章的浏览量，展示在文章详情---------------------------
+
+        //从redis查询文章浏览量
+        Integer viewCount = redisCache.getCacheMapValue("article:viewCount", id.toString());
+        article.setViewCount(viewCount.longValue());
+
+        //-----------------------------------------------------------------------------
 
         //把最后的查询结果封装成ArticleListVo(我们写的实体类)。BeanCopyUtils是我们写的工具类
         ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
@@ -148,7 +180,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             articleDetailVo.setCategoryName(category.getName());
         }
 
-        //封装响应返回。ResponseResult是我们在yijun-framework工程的domain目录写的实体类
+        //封装响应返回。ResponseResult是我们在huanf-framework工程的domain目录写的实体类
         return ResponseResult.okResult(articleDetailVo);
+    }
+
+    //--------------------------------根据文章id从mysql查询文章----------------------------
+
+    @Autowired
+    private RedisCache redisCache;
+
+    @Override
+    public ResponseResult updateViewCount(Long id) {
+        //更新redis中的浏览量，对应文章id的viewCount浏览量。article:viewCount是ViewCountRunner类里面写的
+        //用户每从mysql根据文章id查询一次浏览量，那么redis的浏览量就增加1
+        redisCache.incrementCacheMapValue("article:viewCount", id.toString(), 1);
+        return ResponseResult.okResult();
     }
 }

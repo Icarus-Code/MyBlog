@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    //UserService是我们在huanf-framework工程写的接口
+    //UserService是我们在yijun-framework工程写的接口
     private UserService userService;
 
     @GetMapping("/userInfo")
