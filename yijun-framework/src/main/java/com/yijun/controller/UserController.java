@@ -1,0 +1,28 @@
+package com.yijun.controller;
+
+import com.yijun.domain.ResponseResult;
+import com.yijun.domain.User;
+import com.yijun.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+    @Autowired
+    //UserService是我们在yijun-framework工程写的接口
+    private UserService userService;
+
+    @GetMapping("/userInfo")
+    public ResponseResult userInfo() {
+        //查询个人信息
+        return userService.userInfo();
+    }
+
+    @PutMapping("userInfo")
+    public ResponseResult updateUserInfo(@RequestBody User user) {
+        //更新个人信息
+        return userService.updateUserInfo(user);
+    }
+}

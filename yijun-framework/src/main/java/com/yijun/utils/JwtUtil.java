@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
@@ -17,7 +16,7 @@ public class JwtUtil {
     //有效期为
     public static final Long JWT_TTL = 72 * 60 * 60 * 1000L;// 60 * 60 *1000  一个小时
     //设置秘钥明文
-    public static final String JWT_KEY = "yijun";
+    public static final String JWT_KEY = "huanfqc";
 
     public static String getUUID() {
         String token = UUID.randomUUID().toString().replaceAll("-", "");
@@ -26,7 +25,6 @@ public class JwtUtil {
 
     /**
      * 生成jtw
-     *
      * @param subject token中要存放的数据（json格式）
      * @return
      */
@@ -60,7 +58,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setId(uuid)              //唯一的ID
                 .setSubject(subject)   // 主题  可以是JSON数据
-                .setIssuer("YJ")     // 签发者
+                .setIssuer("HF")     // 签发者
                 .setIssuedAt(now)      // 签发时间
                 .signWith(signatureAlgorithm, secretKey) //使用HS256对称加密算法签名, 第二个参数为秘钥
                 .setExpiration(expDate);
@@ -68,7 +66,6 @@ public class JwtUtil {
 
     /**
      * 创建token
-     *
      * @param id
      * @param subject
      * @param ttlMillis
@@ -87,7 +84,6 @@ public class JwtUtil {
 
     /**
      * 生成加密后的秘钥 secretKey
-     *
      * @return
      */
     public static SecretKey generalKey() {

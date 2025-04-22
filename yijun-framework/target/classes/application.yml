@@ -31,3 +31,8 @@ mybatis-plus:
       logic-not-delete-value: 0
       # 主键自增策略，以mysql数据库为准
       id-type: auto
+
+myoss:
+  xxaccessKey: 67l-W3jIkMzW3JMFuc8odhiC2MKR7E-3ArdHaE2l
+  xxsecretKey: 26tIZn1J7NxwV0B-ZTMwslR5_kyoflRp3krJgtFq
+  xxbucket: hikari-blog
