@@ -17,7 +17,7 @@ import java.io.IOException;
 
 
 @Component
-//自定义认证失败的处理器。ResponseResult、AppHttpCodeEnum是我们在huanf-framework工程写的类
+//自定义认证失败的处理器。ResponseResult、AppHttpCodeEnum是我们在yijun-framework工程写的类
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
     @Override

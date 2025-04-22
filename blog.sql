@@ -310,23 +310,26 @@ DROP TABLE IF EXISTS `sys_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '用户名',
-  `nick_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '昵称',
-  `password` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '密码',
-  `type` char(1) DEFAULT '0' COMMENT '用户类型：0代表普通用户，1代表管理员',
-  `status` char(1) DEFAULT '0' COMMENT '账号状态（0正常 1停用）',
-  `email` varchar(64) DEFAULT NULL COMMENT '邮箱',
-  `phonenumber` varchar(32) DEFAULT NULL COMMENT '手机号',
-  `sex` char(1) DEFAULT NULL COMMENT '用户性别（0男，1女，2未知）',
-  `avatar` varchar(128) DEFAULT NULL COMMENT '头像',
-  `create_by` bigint DEFAULT NULL COMMENT '创建人的用户id',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` bigint DEFAULT NULL COMMENT '更新人',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `del_flag` int DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
+                            `id` int NOT NULL AUTO_INCREMENT,
+                            `user_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '用户名',
+                            `nick_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '昵称',
+                            `password` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '密码',
+                            `type` char(1) DEFAULT '0' COMMENT '用户类型：0代表普通用户，1代表管理员',
+                            `status` char(1) DEFAULT '0' COMMENT '账号状态（0正常 1停用）',
+                            `email` varchar(64) DEFAULT NULL COMMENT '邮箱',
+                            `phonenumber` varchar(32) DEFAULT NULL COMMENT '手机号',
+                            `sex` char(1) DEFAULT NULL COMMENT '用户性别（0男，1女，2未知）',
+                            `avatar` varchar(128) DEFAULT NULL COMMENT '头像',
+                            `create_by` bigint DEFAULT NULL COMMENT '创建人的用户id',
+                            `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+                            `update_by` bigint DEFAULT NULL COMMENT '更新人',
+                            `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+                            `del_flag` int DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
+                            PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 4
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci COMMENT ='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,9 +337,19 @@ CREATE TABLE `sys_user` (
 --
 
 LOCK TABLES `sys_user` WRITE;
-/*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` VALUES (1,'huanfqc','焕发@青春','$2a$10$VcIamfDZIvkRP1JJZKYAHOZpsb4Z3LZptJACS9wur9mZoOpTMpsAO','1','0','228675@huanfqc.cn','18888888888','0','https://img1.baidu.com/it/u=1333417867,4012964063&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500',NULL,'2023-07-21 13:07:35',1,'2023-07-22 13:08:04',0),(2,'HFuser','测试用户','$2a$10$Cjxu8UwfmUYvgzy7VJexke3suuKNM9bwy8ENHj4UEzBmMZX5p.OBm','0','0','123@huanfqc.cn','12093473451','0','https://img1.baidu.com/it/u=1333417867,4012964063&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500',NULL,'2023-07-13 13:07:28',NULL,'2023-12-25 13:55:04',0);
-/*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
+/*!40000 ALTER TABLE `sys_user`
+    DISABLE KEYS */;
+INSERT INTO `sys_user`
+VALUES (1, 'yijunqc', '焕发@青春', '$2a$10$VcIamfDZIvkRP1JJZKYAHOZpsb4Z3LZptJACS9wur9mZoOpTMpsAO', '1', '0',
+        '228675@yijunqc.cn', '18888888888', '0',
+        'https://img1.baidu.com/it/u=1333417867,4012964063&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500', NULL,
+        '2023-07-21 13:07:35', 1, '2023-07-22 13:08:04', 0),
+       (2, 'bloguser', '测试用户', '$2a$10$Cjxu8UwfmUYvgzy7VJexke3suuKNM9bwy8ENHj4UEzBmMZX5p.OBm', '0', '0',
+        '123@yijunqc.cn', '12093473451', '0',
+        'https://img1.baidu.com/it/u=1333417867,4012964063&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500', NULL,
+        '2023-07-13 13:07:28', NULL, '2023-12-25 13:55:04', 0);
+/*!40000 ALTER TABLE `sys_user`
+    ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -344,7 +357,7 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `sys_user_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_user_role` (
   `user_id` bigint NOT NULL COMMENT '用户ID',

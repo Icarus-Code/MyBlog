@@ -33,15 +33,18 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     //查询评论区的评论
-    public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize) {
+    public ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize) {
 
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
 
-        //对articleId进行判断，作用是得到指定的文章
-        queryWrapper.eq(Comment::getArticleId, articleId);
+        //对articleId进行判断，作用是得到指定的文章。如果是文章评论，才会判断articleId，避免友链评论判断articleId时出现空指针
+        queryWrapper.eq(SystemCanstants.ARTICLE_COMMENT.equals(commentType), Comment::getArticleId, articleId);
 
         //对评论区的某条评论的rootID进行判断，如果为-1，就表示是根评论。SystemCanstants是我们写的解决字面值的类
         queryWrapper.eq(Comment::getRootId, SystemCanstants.COMMENT_ROOT);
+
+        //文章的评论，避免查到友链的评论
+        queryWrapper.eq(Comment::getType, commentType);
 
         //分页查询。查的是整个评论区的每一条评论
         Page<Comment> page = new Page<>(pageNum, pageSize);
@@ -70,7 +73,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public ResponseResult addComment(Comment comment) {
         //注意前端在调用这个发送评论接口时，在请求体是没有向我们传入createTime、createId、updateTime、updateID字段，所以
         //我们这里往后端插入数据时，就会导致上面那行的四个字段没有值
-        //为了解决这个问题，我们在huanf-framework工程新增了MyMetaObjectHandler类、修改了Comment类。详细可自己定位去看一下代码
+        //为了解决这个问题，我们在yijun-framework工程新增了MyMetaObjectHandler类、修改了Comment类。详细可自己定位去看一下代码
 
         //限制用户在发送评论时，评论内容不能为空。如果为空就抛出异常
         if (!StringUtils.hasText(comment.getContent())) {

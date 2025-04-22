@@ -20,7 +20,7 @@ public class BlogLoginController {
     private BlogLoginService blogLoginService;
 
     @PostMapping("/login")
-    //ResponseResult是我们在huanf-framework工程里面写的实体类
+    //ResponseResult是我们在yijun-framework工程里面写的实体类
     public ResponseResult login(@RequestBody User user) {
         //如果用户在进行登录时，没有传入'用户名'
         if (!StringUtils.hasText(user.getUserName())) {
