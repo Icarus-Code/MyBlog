@@ -1,5 +1,6 @@
 package com.yijun.controller;
 
+import com.yijun.annotation.mySystemlog;
 import com.yijun.domain.ResponseResult;
 import com.yijun.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class LinkController {
 
     @Autowired
-    //LinkService是我们在yijun-framework工程写的接口
     private LinkService linkService;
 
-
     @GetMapping("/getAllLink")
-    //ResponseResult是我们在yijun-framework工程写的实体类
+    @mySystemlog(xxbusinessName = "获取所有友链")
     public ResponseResult getAllLink() {
         return linkService.getAllLink();
     }
-
 }

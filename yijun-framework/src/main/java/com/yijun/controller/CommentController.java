@@ -1,5 +1,6 @@
 package com.yijun.controller;
 
+import com.yijun.annotation.mySystemlog;
 import com.yijun.constants.SystemCanstants;
 import com.yijun.domain.Comment;
 import com.yijun.domain.ResponseResult;
@@ -12,27 +13,23 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
     @Autowired
-    //CommentService是我们在yijun-framework工程写的类
     private CommentService commentService;
 
     @GetMapping("commentList")
-    //ResponseResult是我们在yijun-framework工程写的类
+    @mySystemlog(xxbusinessName = "获取文章评论列表")
     public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize) {
-        //SystemCanstants是我们写的用来解决字面值的常量类，Article_COMMENT代表0
         return commentService.commentList(SystemCanstants.ARTICLE_COMMENT, articleId, pageNum, pageSize);
     }
 
     @PostMapping
-    //在文章的评论区发送评论。ResponseResult是我们在yijun-framework工程写的类
+    @mySystemlog(xxbusinessName = "添加文章评论")
     public ResponseResult addComment(@RequestBody Comment comment) {
         return commentService.addComment(comment);
     }
 
     @GetMapping("/linkCommentList")
-    //在友链的评论区发送评论。ResponseResult是我们在yijun-framework工程写的类
+    @mySystemlog(xxbusinessName = "获取友链评论列表")
     public ResponseResult linkCommentList(Integer pageNum, Integer pageSize) {
-        //commentService是我们刚刚实现文章的评论区发送评论功能时(当时用的是addComment方法，现在用commentList方法)，写的类
-        //SystemCanstants是我们写的用来解决字面值的常量类，Article_LINK代表1
         return commentService.commentList(SystemCanstants.LINK_COMMENT, null, pageNum, pageSize);
     }
 }

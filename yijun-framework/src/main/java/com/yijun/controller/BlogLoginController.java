@@ -1,5 +1,6 @@
 package com.yijun.controller;
 
+import com.yijun.annotation.mySystemlog;
 import com.yijun.domain.ResponseResult;
 import com.yijun.domain.User;
 import com.yijun.enums.AppHttpCodeEnum;
@@ -11,26 +12,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class BlogLoginController {
 
     @Autowired
-    //BlogLoginService是我们在service目录写的接口
     private BlogLoginService blogLoginService;
 
     @PostMapping("/login")
-    //ResponseResult是我们在yijun-framework工程里面写的实体类
+    @mySystemlog(xxbusinessName = "用户登录")
     public ResponseResult login(@RequestBody User user) {
-        //如果用户在进行登录时，没有传入'用户名'
         if (!StringUtils.hasText(user.getUserName())) {
-            // 提示'必须要传用户名'。AppHttpCodeEnum是我们写的枚举类。SystemException是我们写的统一异常处理的类
             throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
         }
         return blogLoginService.login(user);
     }
 
     @PostMapping("/logout")
+    @mySystemlog(xxbusinessName = "用户登出")
     public ResponseResult logout() {
         return blogLoginService.logout();
     }

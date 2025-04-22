@@ -1,5 +1,6 @@
 package com.yijun.controller;
 
+import com.yijun.annotation.mySystemlog;
 import com.yijun.domain.ResponseResult;
 import com.yijun.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
 
     @Autowired
-    //CategoryService是我们在yijun-framework工程里面写的接口
     private CategoryService categoryService;
 
     @GetMapping("/getCategoryList")
-    //ResponseResult是我们在yijun-framework工程里面写的实体类
+    @mySystemlog(xxbusinessName = "获取分类列表")
     public ResponseResult getCategoryList(){
         return categoryService.getCategoryList();
     }
-
 }

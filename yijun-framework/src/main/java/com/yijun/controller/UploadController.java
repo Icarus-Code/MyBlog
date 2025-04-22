@@ -1,5 +1,6 @@
 package com.yijun.controller;
 
+import com.yijun.annotation.mySystemlog;
 import com.yijun.domain.ResponseResult;
 import com.yijun.service.OssUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
 
     @Autowired
-    //UploadService是我们在yijun-framework写的接口
     private OssUploadService ossUploadService;
 
     @PostMapping("/upload")
-    //MultipartFile是spring提供的接口，ResponseResult是我们在yijun-framework写的实体类
+    @mySystemlog(xxbusinessName = "上传图片到七牛云")
     public ResponseResult uploadImg(MultipartFile img) {
-        //图片上传到七牛云
         return ossUploadService.uploadImg(img);
     }
 }
