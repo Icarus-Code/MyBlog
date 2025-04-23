@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     @Autowired
-    //操作数据库。ArticleService是我们在huanf-framework工程写的接口
+    //操作数据库。ArticleService是我们在yijun-framework工程写的接口
     private ArticleService articleService;
 
 
@@ -180,7 +180,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             articleDetailVo.setCategoryName(category.getName());
         }
 
-        //封装响应返回。ResponseResult是我们在huanf-framework工程的domain目录写的实体类
+        //封装响应返回。ResponseResult是我们在yijun-framework工程的domain目录写的实体类
         return ResponseResult.okResult(articleDetailVo);
     }
 

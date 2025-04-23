@@ -1,35 +1,29 @@
 package com.yijun.controller;
 
-import com.yijun.annotation.mySystemlog;
 import com.yijun.domain.ResponseResult;
 import com.yijun.domain.User;
 import com.yijun.enums.AppHttpCodeEnum;
-import com.yijun.handler.exception.SystemException;
-import com.yijun.service.BlogLoginService;
+import com.yijun.exception.SystemException;
+import com.yijun.service.SystemLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class BlogLoginController {
+public class LoginController {
 
     @Autowired
-    private BlogLoginService blogLoginService;
+    private SystemLoginService systemLoginService;
 
-    @PostMapping("/login")
-    @mySystemlog(xxbusinessName = "用户登录")
+    @PostMapping("/user/login")
     public ResponseResult login(@RequestBody User user) {
         if (!StringUtils.hasText(user.getUserName())) {
+            //提示 必须要传用户名
             throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
         }
-        return blogLoginService.login(user);
-    }
-
-    @PostMapping("/logout")
-    @mySystemlog(xxbusinessName = "用户登出")
-    public ResponseResult logout() {
-        return blogLoginService.logout();
+        return systemLoginService.login(user);
     }
 }

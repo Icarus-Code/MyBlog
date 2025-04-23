@@ -68,7 +68,7 @@ public class myLogAspect {
         log.info("接口描述   : {}", systemlog.xxbusinessName());
         // 打印 Http method
         log.info("请求方式   : {}", request.getMethod());
-        // 打印调用 controller 的全路径(全类名)、方法名
+        // 打印调用 com.yijun.controller 的全路径(全类名)、方法名
         log.info("请求类名   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), ((MethodSignature) joinPoint.getSignature()).getName());
         // 打印请求的 IP
         log.info("访问IP    : {}", request.getRemoteHost());

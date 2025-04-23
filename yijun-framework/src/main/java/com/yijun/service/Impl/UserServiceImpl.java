@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yijun.domain.ResponseResult;
 import com.yijun.domain.User;
 import com.yijun.enums.AppHttpCodeEnum;
-import com.yijun.handler.exception.SystemException;
+import com.yijun.exception.SystemException;
 import com.yijun.mapper.UserMapper;
 import com.yijun.service.UserService;
 import com.yijun.utils.BeanCopyUtils;

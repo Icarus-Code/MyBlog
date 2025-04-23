@@ -2,6 +2,7 @@ package com.yijun.handler.exception;
 
 import com.yijun.domain.ResponseResult;
 import com.yijun.enums.AppHttpCodeEnum;
+import com.yijun.exception.SystemException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

@@ -3,7 +3,7 @@ package com.yijun.service.Impl;
 import com.google.gson.Gson;
 import com.yijun.domain.ResponseResult;
 import com.yijun.enums.AppHttpCodeEnum;
-import com.yijun.handler.exception.SystemException;
+import com.yijun.exception.SystemException;
 import com.yijun.service.OssUploadService;
 import com.yijun.utils.PathUtils;
 import com.qiniu.common.QiniuException;

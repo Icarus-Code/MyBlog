@@ -1,4 +1,4 @@
-package com.yijun.handler.exception;
+package com.yijun.exception;
 
 import com.yijun.enums.AppHttpCodeEnum;
 

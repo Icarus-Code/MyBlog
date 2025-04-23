@@ -9,18 +9,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-/**
- * 用户表(User)表实体类
- *
- * @author makejava
- * @since 2023-07-22 20:41:51
- */
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sys_user")
-public class User {
+public class User implements java.io.Serializable {
 
     //主键，禁用雪花算法，使用mysql的主键自增策略
     @TableId(type = IdType.AUTO)

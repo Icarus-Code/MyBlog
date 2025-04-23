@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="yijun-framework" />
         <module name="yijun-admin" />
+        <module name="yijun-blog" />
       </profile>
     </annotationProcessing>
   </component>

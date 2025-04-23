@@ -8,7 +8,7 @@ import com.yijun.constants.SystemCanstants;
 import com.yijun.domain.Comment;
 import com.yijun.domain.ResponseResult;
 import com.yijun.enums.AppHttpCodeEnum;
-import com.yijun.handler.exception.SystemException;
+import com.yijun.exception.SystemException;
 import com.yijun.mapper.CommentMapper;
 import com.yijun.service.CommentService;
 import com.yijun.service.UserService;
