@@ -1,7 +1,9 @@
 package com.yijun.controller;
 
 import com.yijun.domain.ResponseResult;
+import com.yijun.dto.TagListDto;
 import com.yijun.service.TagService;
+import com.yijun.vo.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,8 @@ public class TagController {
     //查询标签列表
     @GetMapping("/list")
     //ResponseResult是我们在yijun-framework工程的实体类
-    public ResponseResult list() {
-        //list是mybatisplus提供的方法
-        return ResponseResult.okResult(tagService.list());
+    public ResponseResult<PageVo> list(Integer pageNum, Integer pageSize, TagListDto tagListDto) {
+        //pageTagList是我们在yijun-framework工程写的方法
+        return tagService.pageTagList(pageNum, pageSize, tagListDto);
     }
 }

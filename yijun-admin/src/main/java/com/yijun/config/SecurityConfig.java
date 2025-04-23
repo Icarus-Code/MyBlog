@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    //注入我们在huanf-blog工程写的JwtAuthenticationTokenFilter过滤器
+    //注入我们在yijun-blog工程写的JwtAuthenticationTokenFilter过滤器
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
     @Autowired
@@ -89,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout().disable();
 
-        //把我们在huanf-blog工程写的JwtAuthenticationTokenFilter过滤器添加到Security的过滤器链中
+        //把我们在yijun-blog工程写的JwtAuthenticationTokenFilter过滤器添加到Security的过滤器链中
         //第一个参数是你要添加的过滤器，第二个参数是你想把你的过滤器添加到哪个security官方过滤器之前
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
