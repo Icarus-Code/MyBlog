@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("com.yijun.mapper")
-@EnableScheduling//@EnableScheduling是spring提供的定时任务的注解
+//@EnableScheduling//@EnableScheduling是spring提供的定时任务的注解
 public class MyBlogApplication {
 
     public static void main(String[] args) {

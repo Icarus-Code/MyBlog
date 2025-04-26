@@ -1,6 +1,7 @@
 package com.yijun.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yijun.constants.SystemCanstants;
 import com.yijun.domain.Article;
@@ -11,10 +12,13 @@ import com.yijun.service.ArticleService;
 import com.yijun.service.CategoryService;
 import com.yijun.utils.BeanCopyUtils;
 import com.yijun.vo.CategoryVo;
+import com.yijun.vo.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -30,7 +34,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     //查询分类列表的核心代码
     public ResponseResult getCategoryList() {
         LambdaQueryWrapper<Article> articleWrapper = new LambdaQueryWrapper<>();
-        //要求查的是getStatus字段的值为1，注意SystemCanstants是我们写的一个常量类，用来解决字面值的书写问题
+        //要求查的是文章表status字段的值为1，注意SystemCanstants是我们写的一个常量类，用来解决字面值的书写问题
         articleWrapper.eq(Article::getStatus, SystemCanstants.ARTICLE_STATUS_NORMAL);
         //查询文章列表，条件就是上一行的articleWrapper
         List<Article> articleList = articleService.list(articleWrapper);
@@ -57,5 +61,39 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(categories, CategoryVo.class);
 
         return ResponseResult.okResult(categoryVos);
+    }
+
+    //----------------------------写博客-查询文章分类的接口--------------------------------------
+
+    @Override
+    public List<CategoryVo> listAllCategory() {
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Category::getStatus, SystemCanstants.NORMAL);
+        List<Category> list = list(wrapper);
+        List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(list, CategoryVo.class);
+        return categoryVos;
+    }
+
+    //----------------------------------分页查询分类列表------------------------------------------
+
+    @Override
+    public PageVo selectCategoryPage(Category category, Integer pageNum, Integer pageSize) {
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper();
+
+        queryWrapper.like(StringUtils.hasText(category.getName()), Category::getName, category.getName());
+        queryWrapper.eq(Objects.nonNull(category.getStatus()), Category::getStatus, category.getStatus());
+
+        Page<Category> page = new Page<>();
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        page(page, queryWrapper);
+
+        //转换成VO
+        List<Category> categories = page.getRecords();
+
+        PageVo pageVo = new PageVo();
+        pageVo.setTotal(page.getTotal());
+        pageVo.setRows(categories);
+        return pageVo;
     }
 }

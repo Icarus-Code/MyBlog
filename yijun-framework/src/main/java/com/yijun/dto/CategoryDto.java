@@ -1,19 +1,19 @@
-package com.yijun.vo;
+package com.yijun.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-//返回给前端的特定字段
-public class CategoryVo {
+@NoArgsConstructor
+public class CategoryDto {
 
-    private Long id;
+    //分类名
     private String name;
-
     //描述
     private String description;
+    //状态0:正常,1禁用
+    private String status;
 
 }
