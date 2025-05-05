@@ -33,7 +33,7 @@ public class TagController {
     //-------------------------------新增标签------------------------------------
 
     @PostMapping
-    public ResponseResult add(@RequestBody AddTagDto tagDto) {
+    public ResponseResult addTag(@RequestBody AddTagDto tagDto) {
         Tag tag = BeanCopyUtils.copyBean(tagDto, Tag.class);
         tagService.save(tag);
         return ResponseResult.okResult();
@@ -41,10 +41,17 @@ public class TagController {
 
     //-------------------------------删除标签------------------------------------
 
-    @DeleteMapping("/{id}")
-    //pageTagList是我们在yijun-framework工程写的方法
-    public ResponseResult deleteTag(@PathVariable Long id) {
-        return tagService.deleteTag(id);
+    @DeleteMapping
+    public ResponseResult deleteTag(@RequestParam("ids") String ids) {
+        if (!ids.contains(",")) {
+            tagService.deleteTag(Long.valueOf(ids));
+        } else {
+            String[] idArr = ids.split(",");
+            for (String id : idArr) {
+                tagService.deleteTag(Long.valueOf(id));
+            }
+        }
+        return ResponseResult.okResult();
     }
 
     //-------------------------------修改标签------------------------------------

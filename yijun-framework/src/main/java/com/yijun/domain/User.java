@@ -1,5 +1,6 @@
 package com.yijun.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.*;
@@ -8,11 +9,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+@SuppressWarnings("serial")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sys_user")
-public class User {
+public class User implements Serializable {
 
     //主键，禁用雪花算法，使用mysql的主键自增策略
     @TableId(type = IdType.AUTO)
