@@ -1,6 +1,7 @@
 package com.yijun.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -228,4 +229,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 更新用户信息
         updateById(user);
     }
+
+    //-----------------------------修改用户-③更新用户状态-------------------------------
+
+    @Override
+    public ResponseResult updateUserStatus(User user) {
+        // 构建更新条件
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(User::getId, user.getId())
+                .set(User::getStatus, user.getStatus());
+
+        // 执行更新
+        boolean success = update(updateWrapper);
+
+        // 处理更新结果
+        if (!success) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.USER_NOT_EXIST);
+        }
+
+        return ResponseResult.okResult();
+    }
+
+
 }

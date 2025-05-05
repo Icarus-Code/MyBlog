@@ -3,6 +3,7 @@ package com.yijun.controller;
 import com.yijun.domain.ResponseResult;
 import com.yijun.domain.Role;
 import com.yijun.domain.User;
+import com.yijun.dto.ChangeUserStatusDto;
 import com.yijun.enums.AppHttpCodeEnum;
 import com.yijun.exception.SystemException;
 import com.yijun.service.RoleService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -81,4 +83,25 @@ public class UserController {
         userService.updateUser(user);
         return ResponseResult.okResult();
     }
+
+    //--------------------------------修改用户状态--------------------------------
+
+    @PutMapping("/changeStatus")
+    public ResponseResult changeStatus(@RequestBody ChangeUserStatusDto userStatusDto) {
+        // 参数校验
+        if (userStatusDto.getUserId() == null || userStatusDto.getStatus() == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_REQUIRED);
+        }
+
+        // 状态值校验（根据业务需求调整）
+        if (!Arrays.asList("0", "1").contains(userStatusDto.getStatus())) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.STATUS_ERROR);
+        }
+
+        User user = new User();
+        user.setId(userStatusDto.getUserId());
+        user.setStatus(userStatusDto.getStatus());
+        return ResponseResult.okResult(userService.updateById(user));
+    }
+
 }

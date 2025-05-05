@@ -28,4 +28,7 @@ public interface UserService extends IService<User> {
 
     //修改用户-②更新用户信息
     void updateUser(User user);
+
+    ResponseResult updateUserStatus(User user);
+
 }

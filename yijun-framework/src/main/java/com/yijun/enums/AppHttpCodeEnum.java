@@ -6,6 +6,10 @@ public enum AppHttpCodeEnum {
     // 登录
     NEED_LOGIN(401, "需要登录后操作"),
     NO_OPERATOR_AUTH(403, "无权限操作"),
+    PARAM_REQUIRED(400, "必要参数缺失"),
+    USER_NOT_EXIST(404, "用户不存在"),
+    STATUS_ERROR(409, "状态参数必须是 0 或 1"),
+    CANNOT_CHANGE_CURRENT_USER_STATUS(403, "禁止修改当前用户状态"),
     SYSTEM_ERROR(500, "出现错误"),
     USERNAME_EXIST(501, "用户名已存在"),
     PHONENUMBER_EXIST(502, "手机号已存在"),
